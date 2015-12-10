@@ -5,14 +5,11 @@ module Google
   class ClientBuilder
     extend ConstructionHelper
 
-    PRIVATE_KEY = ENV.fetch("GOOGLE_API_PRIVATE_KEY").gsub("\\n", "\n")
-    PRIVATE_KEY_SECRET = "notasecret" # static default for Google P12 auth
-    SERVICE_ACCOUNT_EMAIL = ENV.fetch("GOOGLE_API_SERVICE_ACCOUNT")
-
     attr_accessor :user_email, :scopes, :authorize
 
     def self.key
-      OpenSSL::PKey::RSA.new(PRIVATE_KEY, PRIVATE_KEY_SECRET)
+      OpenSSL::PKey::RSA.new(ENV.fetch("GOOGLE_API_PRIVATE_KEY").gsub("\\n", "\n"),
+                             "notasecret") # static default for Google P12 auth
     end
 
     def initialize
@@ -32,7 +29,7 @@ module Google
     private
 
     def asserter
-      Google::APIClient::JWTAsserter.new(SERVICE_ACCOUNT_EMAIL, scopes, self.class.key)
+      Google::APIClient::JWTAsserter.new(ENV.fetch("GOOGLE_API_SERVICE_ACCOUNT"), scopes, self.class.key)
     end
 
     def authorize?
