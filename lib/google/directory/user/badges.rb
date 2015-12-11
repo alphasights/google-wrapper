@@ -1,6 +1,6 @@
 module Google
   module Directory
-    module User
+    class User < BaseApi
       class Badges < BaseApi
         # Update a users badges
         #
