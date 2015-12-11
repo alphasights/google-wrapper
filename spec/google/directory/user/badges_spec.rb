@@ -10,7 +10,10 @@ module Google::Directory::User
     end
 
     it "proxies patch to a google api client" do
-      result = badges_api.update("john.bohn@alphasights.com", [:client_portal, :reporting_world])
+      result = badges_api.update("john.bohn@alphasights.com", {
+        client_portal: true,
+        reporting_world: true,
+      })
 
       api_method = result.data.api_method
       body_object = result.data.body_object
