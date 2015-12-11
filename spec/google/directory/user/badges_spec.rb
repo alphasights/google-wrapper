@@ -1,7 +1,7 @@
 require "spec_helper"
 
-module Google::Directory::User
-  describe Badges do
+module Google::Directory
+  describe User::Badges do
     subject(:badges_api) { described_class.new(client_spy) }
     let(:client_spy) { Google::DummyClient.new }
 
