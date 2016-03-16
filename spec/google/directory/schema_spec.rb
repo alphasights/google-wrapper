@@ -42,6 +42,15 @@ module Google::Directory
       ])
       expect(parameters).to eql({ customer: "my_customer", customerId: "1234" })
     end
+
+    it "proxies get to a google api client" do
+      result = schema_api.get("badges")
+      api_method = result.api_method
+      parameters = result.parameters
+
+      expect(api_method.name).to eql("admin.schemas.get")
+      expect(parameters).to eql({ customer: "my_customer", customerId: "1234", schemaKey: "badges" })
+    end
   end
 
   describe Schema::Field do
