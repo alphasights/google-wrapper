@@ -33,5 +33,20 @@ module Google::Directory
         userKey: "john.bohn@alphasights.com"
       })
     end
+
+    it "returns the name of available badges from google schema api" do
+      schema_api = double(Google::Directory::Schema)
+      badgeFields = [
+        double(field_name: "foo"),
+        double(field_name: "bar"),
+      ]
+
+      schema_double = double({fields: badgeFields})
+      expect(schema_api).to receive(:get).with("badges").and_return(schema_double)
+
+      badges_api = described_class.new(client_spy, schema_api)
+
+      expect(badges_api.available).to eql(%w(foo bar))
+    end
   end
 end
