@@ -24,6 +24,11 @@ module Google
                         parameters: default_query.merge(schemaKey: key))
       end
 
+      def get(key)
+        client.execute!(api_method: schema_api.get,
+                        parameters: default_query.merge(schemaKey: key)).data
+      end
+
       private
 
       def schema_api
